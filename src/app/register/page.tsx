@@ -72,7 +72,7 @@ export default function Register() {
 
   const {
     handleSubmit,
-    formState: { isSubmitting },
+    formState: { isSubmitting, isSubmitted },
   } = form;
 
   return (
@@ -97,7 +97,7 @@ export default function Register() {
                   type="text"
                   className="bg-white shadow-xl/10"
                 />
-                {fieldState.invalid && fieldState.isTouched && (
+                {fieldState.invalid && (fieldState.isTouched || isSubmitted) && (
                   <FieldError errors={[fieldState.error]} />
                 )}
               </Field>
@@ -122,7 +122,7 @@ export default function Register() {
                   type="text"
                   className="bg-white shadow-xl/10"
                 />
-                {fieldState.invalid && fieldState.isTouched && (
+                {fieldState.invalid && (fieldState.isTouched || isSubmitted) && (
                   <FieldError errors={[fieldState.error]} />
                 )}
               </Field>
@@ -147,7 +147,7 @@ export default function Register() {
                   type="password"
                   className="bg-white shadow-xl/10"
                 />
-                {fieldState.invalid && fieldState.isTouched && (
+                {fieldState.invalid && (fieldState.isTouched || isSubmitted) && (
                   <FieldError errors={[fieldState.error]} />
                 )}
               </Field>
@@ -172,7 +172,7 @@ export default function Register() {
                   type="password"
                   className="bg-white shadow-xl/10"
                 />
-                {fieldState.invalid && fieldState.isTouched && (
+                {fieldState.invalid && (fieldState.isTouched || isSubmitted) && (
                   <FieldError errors={[fieldState.error]} />
                 )}
               </Field>
@@ -196,7 +196,7 @@ export default function Register() {
                   type="tel"
                   className="bg-white shadow-xl/10"
                 />
-                {fieldState.invalid && fieldState.isTouched && (
+                {fieldState.invalid && (fieldState.isTouched || isSubmitted) && (
                   <FieldError errors={[fieldState.error]} />
                 )}
               </Field>

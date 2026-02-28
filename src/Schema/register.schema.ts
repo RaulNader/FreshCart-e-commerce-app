@@ -42,7 +42,7 @@ export const registerSchema = z
     },
     {
       error: "Passwords and repassword not matched",
-      path: ["confirmPassword"],
+      path: ["rePassword"],
     },
   );
 
