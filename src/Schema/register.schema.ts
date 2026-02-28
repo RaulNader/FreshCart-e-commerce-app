@@ -1,5 +1,6 @@
 import { z } from "zod";
 const egyptPhoneRegex = /^(?:\+20|0)?1[0125]\d{8}$/;
+const gmailRegex = /^[^\s@]+@gmail\.com$/i;
 const passwordRegex =
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
@@ -11,7 +12,11 @@ export const registerSchema = z
       .max(10, "Name is too long")
       .refine((val) => !/[0-9]/.test(val), "Name should not contain numbers"),
 
-    email: z.string().min(1, "Email is required").email("Invalid email format"),
+    email: z
+      .string()
+      .min(1, "Email is required")
+      .email("Invalid email format")
+      .regex(gmailRegex, "Only Gmail addresses are allowed"),
 
     phone: z
       .string()
