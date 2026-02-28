@@ -2,7 +2,10 @@ import { getToken } from "next-auth/jwt";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function proxy(request: NextRequest) {
-  const token = await getToken({ req: request });
+  const token = await getToken({
+    req: request,
+    secret: process.env.AUTH_SECRET ?? process.env.NEXTAUTH_SECRET,
+  });
   const { pathname } = request.nextUrl;
   const isAuthPage = pathname === "/login" || pathname === "/register";
   const isCartPage = pathname === "/cart";
