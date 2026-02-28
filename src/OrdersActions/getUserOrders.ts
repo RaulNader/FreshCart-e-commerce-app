@@ -1,6 +1,7 @@
 "use server";
 
 import { getMyToken } from "@/utilities/getMyToken";
+import { jwtDecode } from "jwt-decode";
 
 export interface OrderedProduct {
   id: string;
@@ -99,14 +100,21 @@ export async function getUserOrders(): Promise<UserOrder[]> {
   const token = await getMyToken();
   if (!token) throw new Error("You should login first");
 
-  const res = await fetch("https://ecommerce.routemisr.com/api/v1/orders/", {
-    method: "GET",
-    headers: {
-      token,
-      "Content-Type": "application/json",
+  const decoded = jwtDecode<{ id?: string; sub?: string }>(token);
+  const userId = decoded.id ?? decoded.sub;
+  if (!userId) throw new Error("Cannot resolve user id from token");
+
+  const res = await fetch(
+    `https://ecommerce.routemisr.com/api/v1/orders/user/${userId}`,
+    {
+      method: "GET",
+      headers: {
+        token,
+        "Content-Type": "application/json",
+      },
+      cache: "no-store",
     },
-    cache: "no-store",
-  });
+  );
 
   const payload: unknown = await res.json();
 
