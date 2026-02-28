@@ -3,6 +3,7 @@
 FreshCart is a modern e-commerce web app built with Next.js, TypeScript, and Tailwind CSS.
 
 ## Features
+
 - Authentication (login/register) with NextAuth
 - Browse products, categories, and brands
 - Product details with related products
@@ -12,6 +13,7 @@ FreshCart is a modern e-commerce web app built with Next.js, TypeScript, and Tai
 - Responsive UI with loading skeletons
 
 ## Tech Stack
+
 - Next.js (App Router)
 - React + TypeScript
 - Tailwind CSS + shadcn/ui
@@ -20,17 +22,20 @@ FreshCart is a modern e-commerce web app built with Next.js, TypeScript, and Tai
 - Sonner (toast notifications)
 
 ## API
+
 This project uses the Route E-commerce API:
 `https://ecommerce.routemisr.com/api/v1`
 
 ## Getting Started
 
 ### 1) Install dependencies
+
 ```bash
 npm install
 ```
 
 ### 2) Add environment variables in `.env.local`
+
 ```env
 NEXTAUTH_URL=http://localhost:3000
 AUTH_SECRET=your_secret_here
@@ -38,6 +43,7 @@ API=https://ecommerce.routemisr.com/api/v1
 ```
 
 ### 3) Run development server
+
 ```bash
 npm run dev
 ```
@@ -45,6 +51,7 @@ npm run dev
 Open `http://localhost:3000`
 
 ## Project Structure
+
 - `src/app` pages and routes
 - `src/api` API helper functions
 - `src/CartActions`, `src/WishlistActions`, `src/CheckOutActions` server actions
@@ -52,4 +59,5 @@ Open `http://localhost:3000`
 - `src/types` TypeScript interfaces
 
 ## Author
+
 Built by RaulNader.
