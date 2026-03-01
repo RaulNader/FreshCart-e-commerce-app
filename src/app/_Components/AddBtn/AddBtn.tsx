@@ -31,8 +31,19 @@ export default function AddBtn({
           richColors: true,
           position: "top-center",
         });
-        setNumOfItems(numOfItems + 1);
+        if (typeof res.numOfCartItems === "number") {
+          setNumOfItems(res.numOfCartItems);
+        } else {
+          setNumOfItems(numOfItems + 1);
+        }
+        return;
       }
+
+      toast.error(res.message ?? "You should login first", {
+        duration: 2000,
+        richColors: true,
+        position: "top-center",
+      });
     } catch (error) {
       toast.error(
         error instanceof Error
