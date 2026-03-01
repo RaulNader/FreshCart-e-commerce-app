@@ -10,7 +10,7 @@ export default async function Products() {
   const data = await getAllProducts();
   return (
     <>
-      <div className="container w-[80%] items-center mx-auto py-8">
+      <div className="container w-full max-w-6xl px-3 sm:px-5 items-center mx-auto py-8">
         <div className="flex flex-wrap ">
           {data.map((product) => {
             return <SingleProducts key={product.id} product={product} />;

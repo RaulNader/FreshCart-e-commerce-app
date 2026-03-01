@@ -77,10 +77,13 @@ export default function CheckOut() {
   } = form;
 
   return (
-    <div className="w-[40%] mx-auto text-white  mt-20 bg-teal-800 border-2 p-5 rounded-2xl">
-      <h1 className="text-2xl text-center text-white font-bold">CheckOut</h1>
+    <div className="w-full max-w-3xl mx-auto px-3 sm:px-5 my-6 sm:my-10">
+      <div className="text-white bg-teal-800 border border-teal-700 p-4 sm:p-6 md:p-8 rounded-2xl">
+        <h1 className="text-2xl sm:text-3xl text-center text-white font-bold mb-4 sm:mb-6">
+          CheckOut
+        </h1>
 
-      <form onSubmit={handleSubmit(handleCheckOut)}>
+        <form onSubmit={handleSubmit(handleCheckOut)} className="space-y-4">
         {/* Details Form */}
         <FieldGroup>
           <Controller
@@ -99,7 +102,7 @@ export default function CheckOut() {
                   autoComplete="on"
                   placeholder="Enter your Details"
                   type="text"
-                  className="bg-white text-black shadow-xl/10"
+                  className="bg-white text-black shadow-xl/10 h-10 sm:h-11"
                 />
                 {fieldState.invalid && fieldState.isTouched && (
                   <FieldError
@@ -130,7 +133,7 @@ export default function CheckOut() {
                   autoComplete="on"
                   placeholder="Enter your Phone Number"
                   type="tel"
-                  className="bg-white text-black shadow-xl/10"
+                  className="bg-white text-black shadow-xl/10 h-10 sm:h-11"
                 />
                 {fieldState.invalid && fieldState.isTouched && (
                   <FieldError
@@ -156,12 +159,12 @@ export default function CheckOut() {
                 <FieldLabel className="mt-2">City</FieldLabel>
                 <Input
                   {...field}
-                  id="form-rhf-demo-phone"
+                  id="form-rhf-demo-city"
                   aria-invalid={fieldState.invalid}
                   autoComplete="on"
                   placeholder="Enter your City"
                   type="text"
-                  className="bg-white text-black shadow-xl/10"
+                  className="bg-white text-black shadow-xl/10 h-10 sm:h-11"
                 />
                 {fieldState.invalid && fieldState.isTouched && (
                   <FieldError
@@ -174,26 +177,28 @@ export default function CheckOut() {
           />
         </FieldGroup>
 
-        <div className="mt-4">
+        <div className="pt-1">
           <p className="font-semibold mb-2">Payment Method</p>
-          <div className="flex items-center gap-6">
-            <label className="inline-flex items-center gap-2">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-6">
+            <label className="inline-flex items-center gap-2 rounded-lg border border-white/30 bg-white/10 px-3 py-2">
               <input
                 type="radio"
                 name="paymentMethod"
                 value="cash"
                 checked={paymentMethod === "cash"}
                 onChange={() => setPaymentMethod("cash")}
+                className="accent-emerald-500"
               />
               Cash
             </label>
-            <label className="inline-flex items-center gap-2">
+            <label className="inline-flex items-center gap-2 rounded-lg border border-white/30 bg-white/10 px-3 py-2">
               <input
                 type="radio"
                 name="paymentMethod"
                 value="credit"
                 checked={paymentMethod === "credit"}
                 onChange={() => setPaymentMethod("credit")}
+                className="accent-emerald-500"
               />
               Credit
             </label>
@@ -201,7 +206,7 @@ export default function CheckOut() {
         </div>
 
         <Button
-          className="bg-amber-500 hover:bg-amber-600 mt-6 w-full"
+          className="bg-amber-500 hover:bg-amber-600 mt-2 w-full h-10 sm:h-11"
           type="submit"
           disabled={isSubmitting}
         >
@@ -214,7 +219,8 @@ export default function CheckOut() {
             paymentMethod === "credit" ? "PAYNOW" : "PLACE ORDER"
           )}
         </Button>
-      </form>
+        </form>
+      </div>
     </div>
   );
 }

@@ -10,7 +10,7 @@ export default function Loading() {
   const skeletonItems = Array.from({ length: 40 });
 
   return (
-    <div className="container w-[80%] items-center mx-auto py-8">
+    <div className="container w-full max-w-6xl px-3 sm:px-5 items-center mx-auto py-8">
       <div className="flex flex-wrap">
         {skeletonItems.map((_, index) => (
           <div

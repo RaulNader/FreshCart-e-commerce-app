@@ -27,7 +27,7 @@ export default async function ProdcutDetails({
 
   return (
     <>
-      <div className="container w-[92%] mx-auto my-8">
+      <div className="container w-full max-w-6xl px-3 sm:px-5 mx-auto my-8">
         <div className="flex flex-col md:flex-row items-center justify-center gap-6">
           <div className="w-full max-w-xs bg-white rounded-xl border border-default p-3 shadow-sm">
             <Image
@@ -41,7 +41,9 @@ export default async function ProdcutDetails({
           </div>
 
           <div className="w-full max-w-2xl bg-white rounded-xl border border-default p-4 md:p-5 shadow-sm">
-            <h1 className="text-3xl font-stretch-100%">{data.title}</h1>
+            <h1 className="text-2xl sm:text-3xl font-stretch-100%">
+              {data.title}
+            </h1>
             <p className="text-gray-400">{data.description}</p>
             <h2 className="text-xl text-emerald-400 my-2">
               {data.category.name}
@@ -63,8 +65,10 @@ export default async function ProdcutDetails({
         </div>
       </div>
       <>
-        <div className="container mx-auto w-[80%] mt-6">
-          <h1 className="font-bold text-center text-2xl">Related Products</h1>
+        <div className="container mx-auto w-full max-w-6xl px-3 sm:px-5 mt-6">
+          <h1 className="font-bold text-center mt-2.5 text-2xl">
+            Related Products
+          </h1>
 
           <div className="flex flex-wrap">
             {res.data.map((product: Product) => {

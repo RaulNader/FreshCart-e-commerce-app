@@ -11,14 +11,14 @@ export default function CategoriesSwipper({
 }) {
   return (
     <>
-      <div className="container w-[80%] mx-auto ">
+      <div className="container w-full max-w-6xl px-3 sm:px-5 mx-auto">
         <h1 className="text-2xl text-stone-600 font-bold pb-4">
           Shop Popular Categories
         </h1>
 
         <Swiper
           spaceBetween={0}
-          slidesPerView={5}
+          slidesPerView={1.5}
           modules={[Autoplay]}
           autoplay={{ delay: 5000 }}
           breakpoints={{
@@ -38,7 +38,7 @@ export default function CategoriesSwipper({
               <>
                 <SwiperSlide key={category._id}>
                   <Image
-                    className="w-full  h-37.5 object-cover "
+                    className="w-full h-37.5 object-cover"
                     src={category.image}
                     alt={category.name}
                     width={500}

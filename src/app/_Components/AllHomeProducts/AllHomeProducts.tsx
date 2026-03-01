@@ -7,7 +7,7 @@ export default async function AllHomeProducts() {
 
   return (
     <>
-      <div className="container mx-auto w-[80%] mt-6">
+      <div className="container mx-auto w-full max-w-6xl px-3 sm:px-5 mt-6">
         <div className="flex flex-wrap">
           {data.map((product: Product) => {
             return <SingleProducts product={product} key={product.id} />;

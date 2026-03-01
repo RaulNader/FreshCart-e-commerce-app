@@ -177,7 +177,8 @@ export default function Wishlist() {
   }, []);
 
   return (
-    <div className="w-3/4 mx-auto bg-white mt-9 p-4 rounded-xl border border-default">
+    <div className="w-full max-w-6xl mx-auto px-3 sm:px-5 mt-9">
+      <div className="bg-white p-4 sm:p-5 rounded-xl border border-default">
       <h1 className="text-2xl text-heading font-semibold mb-4 flex items-center gap-2">
         <Heart className="h-6 w-6 text-rose-500" />
         My Wishlist
@@ -222,9 +223,9 @@ export default function Wishlist() {
             return (
               <div
                 key={productId}
-                className="flex items-center justify-between p-3 border border-default rounded-lg"
+                className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 p-3 border border-default rounded-lg"
               >
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-3 w-full sm:w-auto">
                   <Link href={`/products/${productId}`}>
                     <Image
                       src={product.imageCover}
@@ -247,12 +248,12 @@ export default function Wishlist() {
                   </div>
                 </div>
 
-                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 w-full sm:w-auto">
                   <Button
                     type="button"
                     onClick={() => addWishlistItemToCart(productId)}
                     disabled={isMutating}
-                    className="bg-emerald-600 text-white hover:bg-emerald-700"
+                    className="bg-emerald-600 text-white hover:bg-emerald-700 w-full sm:w-auto"
                   >
                     {isMutating && isCurrent && currentAction === "add" ? (
                       <Loader2 className="animate-spin" />
@@ -268,7 +269,7 @@ export default function Wishlist() {
                     type="button"
                     onClick={() => removeWishlistItem(productId)}
                     disabled={isMutating}
-                    className="bg-transparent text-red-500 hover:bg-mauve-200"
+                    className="bg-transparent text-red-500 hover:bg-mauve-200 w-full sm:w-auto"
                   >
                     {isMutating && isCurrent && currentAction === "remove" ? (
                       <Loader2 className="animate-spin" />
@@ -285,6 +286,7 @@ export default function Wishlist() {
           })}
         </div>
       )}
+      </div>
     </div>
   );
 }

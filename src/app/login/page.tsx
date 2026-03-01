@@ -67,7 +67,7 @@ export default function Login() {
   } = form;
 
   return (
-    <div className="w-[50%] mx-auto  mt-20 ">
+    <div className="w-full max-w-lg mx-auto px-3 sm:px-5 mt-10 sm:mt-16">
       <h1 className="text-2xl text-center font-bold">Sign In</h1>
 
       <form onSubmit={handleSubmit(onLogin)}>

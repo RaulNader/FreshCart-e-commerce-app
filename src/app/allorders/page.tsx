@@ -1,8 +1,5 @@
 import Image from "next/image";
-import {
-  getUserOrders,
-  type UserOrder,
-} from "@/OrdersActions/getUserOrders";
+import { getUserOrders, type UserOrder } from "@/OrdersActions/getUserOrders";
 
 export const metadata = {
   title: "All Orders",
@@ -42,8 +39,8 @@ export default async function AllOrders() {
   if (orders.length === 0) {
     return (
       <div className="w-full max-w-6xl mx-auto px-3 sm:px-5 my-8">
-        <p className="bg-white rounded-xl border border-default p-6 text-center text-body text-lg font-semibold">
-          No orders found yet.
+        <p className="bg-white rounded-xl border border-default p-6 text-center text-red-500 text-lg font-semibold">
+          You dont have any orders right now.
         </p>
       </div>
     );
@@ -82,7 +79,7 @@ export default async function AllOrders() {
               {order.items.map((item) => (
                 <div
                   key={`${order.id}-${item.id}`}
-                  className="flex items-center gap-3 border border-default rounded-lg p-3"
+                  className="flex flex-col sm:flex-row sm:items-center gap-3 border border-default rounded-lg p-3"
                 >
                   {item.imageCover ? (
                     <Image
@@ -105,7 +102,7 @@ export default async function AllOrders() {
                     </p>
                   </div>
 
-                  <p className="font-semibold text-blue-500 whitespace-nowrap">
+                  <p className="font-semibold text-blue-500 whitespace-nowrap self-start sm:self-auto">
                     {item.price * item.count} EGP
                   </p>
                 </div>

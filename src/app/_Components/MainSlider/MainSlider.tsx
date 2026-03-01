@@ -9,8 +9,8 @@ import { Autoplay } from "swiper/modules";
 
 export default function MainSlider() {
   return (
-    <div className="container mx-auto w-[80%] py-8">
-      <div className="grid grid-cols-1  md:grid-cols-4">
+    <div className="container mx-auto w-full max-w-6xl px-3 sm:px-5 py-6 sm:py-8">
+      <div className="grid grid-cols-1 md:grid-cols-4">
         <div className="md:col-span-3">
           <Swiper
             spaceBetween={0}
@@ -20,7 +20,7 @@ export default function MainSlider() {
           >
             <SwiperSlide>
               <Image
-                className=" h-100 w-full object-cover"
+                className="h-56 sm:h-72 md:h-100 w-full object-cover"
                 src={img3}
                 alt="Slider Image 1"
                 priority
@@ -29,7 +29,7 @@ export default function MainSlider() {
             <SwiperSlide>
               <Image
                 priority
-                className=" h-100 w-full object-cover"
+                className="h-56 sm:h-72 md:h-100 w-full object-cover"
                 src={img1}
                 alt="Slider Image 2"
               />
@@ -37,23 +37,23 @@ export default function MainSlider() {
             <SwiperSlide>
               <Image
                 priority
-                className="block h-100 w-full object-cover"
+                className="block h-56 sm:h-72 md:h-100 w-full object-cover"
                 src={img2}
                 alt="Slider Image 3"
               />
             </SwiperSlide>
           </Swiper>
         </div>
-        <div className="flex flex-col  md:col-span-1">
+        <div className="flex flex-col md:col-span-1">
           <Image
             priority
-            className=" h-50 w-full object-cover"
+            className="h-40 sm:h-48 md:h-50 w-full object-cover"
             src={img1}
             alt="Grocery Banner 1"
           />
           <Image
             priority
-            className="b h-50 w-full object-cover"
+            className="h-40 sm:h-48 md:h-50 w-full object-cover"
             src={img2}
             alt="Grocery Banner 2"
           />

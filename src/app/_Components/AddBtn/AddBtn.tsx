@@ -52,7 +52,7 @@ export default function AddBtn({
   return (
     <Button
       onClick={() => addProductToCart(id)}
-      className={cn("text-emerald-300 bg-gray-600 w-full", className)}
+      className={cn("text-emerald-300 bg-gray-600 w-full min-w-0", className)}
       disabled={isLoading}
       type="button"
       aria-busy={isLoading}

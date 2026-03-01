@@ -210,7 +210,7 @@ export default function Cart() {
     const incrementButtonId = `${idPrefix}-increment-button-${productId}`;
 
     return (
-      <form className="max-w-xs">
+      <form className="w-fit">
         <label htmlFor={counterInputId} className="sr-only">
           Choose quantity:
         </label>
@@ -479,7 +479,7 @@ export default function Cart() {
                         </div>
                       </div>
 
-                      <div className="mt-3 flex items-center justify-between gap-3">
+                      <div className="mt-3 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
                         {renderQuantityControls({
                           productId,
                           count,

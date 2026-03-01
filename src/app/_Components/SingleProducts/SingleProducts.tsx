@@ -19,9 +19,9 @@ export default async function SingleProducts({
 }) {
   return (
     <>
-      <div className="w-full md:w-1/2 lg:w-1/3 xl:w-1/4 2xl:w-1/5 ">
-        <div className="p-3 ">
-          <Card className="p-1.5 bg-blend-saturation shadow-xl border-2 hover">
+      <div className="w-full sm:w-1/2 lg:w-1/3 xl:w-1/4">
+        <div className="p-2 ">
+          <Card className="py-1 bg-blend-saturation shadow-xl border-2 hover h-full flex flex-col">
             <CardHeader>
               <CardTitle>
                 <Link href={`/products/${product.id}`}>
@@ -30,23 +30,23 @@ export default async function SingleProducts({
                     alt="product-img"
                     width={500}
                     height={500}
-                    className="w-auto h-auto"
+                    className="w-full h-auto"
                   />
                 </Link>
               </CardTitle>
-              <CardDescription className="text-emerald-600 font-bold">
+              <CardDescription className="text-emerald-600 font-bold mb-[-15]  ">
                 {product.category.name}
               </CardDescription>
             </CardHeader>
-            <CardContent>
+            <CardContent className="flex-1">
               <Link href={`/products/${product.id}`}>
-                <p className="font-semibold text-xl hover:underline!  text-neutral-600 line-clamp-1 hover:text-blue-600">
+                <p className="font-semibold  text-xl hover:underline!  text-neutral-600 line-clamp-1 hover:text-blue-600">
                   {product.title}
                 </p>
               </Link>
             </CardContent>
             <CardFooter>
-              <div className=" w-full  flex justify-between">
+              <div className="w-full flex mt-[-15] justify-between text-sm">
                 <span>Price: {product.price} EGP</span>
                 <span>
                   {product.ratingsAverage}
@@ -54,9 +54,15 @@ export default async function SingleProducts({
                 </span>
               </div>
             </CardFooter>
-            <div className="flex items-center gap-2">
-              <AddBtn id={product.id} className="flex-1" />
-              <WishlistBtn id={product.id} className="flex-1" />
+            <div className="mt-[-12] grid grid-cols-2 gap-2 px-1 pb-1">
+              <AddBtn
+                id={product.id}
+                className="w-full min-w-0 justify-center px-2 text-sm"
+              />
+              <WishlistBtn
+                id={product.id}
+                className="w-full min-w-0 justify-center px-2 text-sm"
+              />
             </div>
           </Card>
         </div>
