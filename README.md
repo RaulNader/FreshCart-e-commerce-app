@@ -4,8 +4,7 @@ FreshCart is a modern e-commerce web app built with Next.js, TypeScript, and Tai
 
 ## Live Demo
 
-- Vercel: [https://fresh-cart-e-commerce-app.vercel.app](https://fresh-cart-e-commerce-app.vercel.app)
-
+- Vercel: https://fresh-cart-e-commerce-app-nine.vercel.app/
 ## Features
 
 - Authentication (login/register) with NextAuth
