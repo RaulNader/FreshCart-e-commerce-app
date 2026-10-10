@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { getAllCategories } from "@/api/allCategories.api";
+import { getCategories } from "@/services/catalog.service";
 
 export const metadata = {
   title: "Categories",
@@ -7,7 +7,7 @@ export const metadata = {
 };
 
 export default async function Categories() {
-  const categories = await getAllCategories();
+  const categories = await getCategories();
 
   return (
     <div className="w-full max-w-6xl mx-auto px-3 sm:px-5 my-8">

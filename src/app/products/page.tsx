@@ -1,5 +1,5 @@
-import SingleProducts from "../_Components/SingleProducts/SingleProducts";
-import { getAllProducts } from "@/api/allProducts.api";
+import ProductGrid from "@/components/product/ProductGrid";
+import { getProducts } from "@/services/products.service";
 
 export const metadata = {
   title: "Products",
@@ -7,16 +7,11 @@ export const metadata = {
 };
 
 export default async function Products() {
-  const data = await getAllProducts();
+  const products = await getProducts();
+
   return (
-    <>
-      <div className="container w-full max-w-6xl px-3 sm:px-5 items-center mx-auto py-8">
-        <div className="flex flex-wrap ">
-          {data.map((product) => {
-            return <SingleProducts key={product.id} product={product} />;
-          })}
-        </div>
-      </div>
-    </>
+    <div className="container w-full max-w-6xl px-3 sm:px-5 items-center mx-auto py-8">
+      <ProductGrid products={products} />
+    </div>
   );
 }

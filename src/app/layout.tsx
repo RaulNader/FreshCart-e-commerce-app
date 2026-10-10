@@ -1,10 +1,9 @@
 import type { Metadata } from "next";
-import Navbar from "./_Components/Navbar/page";
+import Navbar from "@/components/layout/Navbar";
+import Providers from "@/components/layout/Providers";
 import "./globals.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import { Toaster } from "sonner";
-import MySessionProvider from "./MySessionProvider/MySessionProvider";
-import { CartContextProvider } from "@/context/CartContext";
 
 export const metadata: Metadata = {
   title: {
@@ -27,13 +26,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <MySessionProvider>
-          <CartContextProvider>
-            <Navbar />
-            {children}
-            <Toaster />
-          </CartContextProvider>
-        </MySessionProvider>
+        <Providers>
+          <Navbar />
+          {children}
+          <Toaster position="top-center" richColors duration={3000} />
+        </Providers>
       </body>
     </html>
   );

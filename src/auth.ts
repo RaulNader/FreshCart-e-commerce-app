@@ -1,9 +1,18 @@
 import { jwtDecode } from "jwt-decode";
 import { NextAuthOptions } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
+import { apiFetch } from "@/lib/api";
+import { AUTH_SECRET } from "@/lib/auth-cookie";
+import type { ApiUser } from "@/types/user.type";
+
+interface SigninResponse {
+  message: string;
+  user: ApiUser;
+  token: string;
+}
 
 export const authOptions: NextAuthOptions = {
-  secret: process.env.AUTH_SECRET ?? process.env.NEXTAUTH_SECRET,
+  secret: AUTH_SECRET,
   pages: {
     signIn: "/login",
   },
@@ -15,31 +24,23 @@ export const authOptions: NextAuthOptions = {
         password: {},
       },
       authorize: async (credentials) => {
-        //* call api sign in
-        const response = await fetch(`${process.env.API}/auth/signin`, {
+        // apiFetch throws the API's own message (e.g. wrong password),
+        // which next-auth passes to signIn() as `error`.
+        const payload = await apiFetch<SigninResponse>("/auth/signin", {
           method: "POST",
-          body: JSON.stringify({
+          body: {
             email: credentials?.email,
             password: credentials?.password,
-          }),
-          headers: {
-            "Content-Type": "application/json",
           },
         });
 
-        const payload = await response.json();
+        const { id } = jwtDecode<{ id: string }>(payload.token);
 
-        if (payload.message == "success") {
-          const decode: { id: string } = jwtDecode(payload.token);
-
-          return {
-            id: decode.id,
-            user: payload.user,
-            token: payload.token,
-          };
-        } else {
-          throw new Error(`Invalid email or password`);
-        }
+        return {
+          id,
+          user: payload.user,
+          token: payload.token,
+        };
       },
     }),
   ],

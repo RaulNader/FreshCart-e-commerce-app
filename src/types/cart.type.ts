@@ -1,56 +1,39 @@
-export interface Cart {
-  status: string;
-  numOfCartItems: number;
-  cartId: string;
-  data: Data;
+import type { Product } from "./product.type";
+
+export type CartProduct = Pick<
+  Product,
+  | "_id"
+  | "id"
+  | "title"
+  | "quantity"
+  | "imageCover"
+  | "category"
+  | "brand"
+  | "subcategory"
+  | "ratingsAverage"
+>;
+
+// Adding to cart returns each product as a bare id instead of an object.
+export interface CartItem<TProduct = CartProduct> {
+  _id: string;
+  count: number;
+  price: number;
+  product: TProduct;
 }
 
-export interface Data {
+export interface Cart<TProduct = CartProduct> {
   _id: string;
   cartOwner: string;
-  products: ProductCartType[];
+  products: CartItem<TProduct>[];
+  totalCartPrice: number;
   createdAt: string;
   updatedAt: string;
-  __v: number;
-  totalCartPrice: number;
 }
 
-export interface ProductCartType {
-  count: number;
-  _id: string;
-  product: Product2;
-  price: number;
-}
-
-export interface Product2 {
-  subcategory: Subcategory[];
-  _id: string;
-  title: string;
-  quantity: number;
-  imageCover: string;
-  category: Category;
-  brand: Brand;
-  ratingsAverage: number;
-  id: string;
-}
-
-export interface Subcategory {
-  _id: string;
-  name: string;
-  slug: string;
-  category: string;
-}
-
-export interface Category {
-  _id: string;
-  name: string;
-  slug: string;
-  image: string;
-}
-
-export interface Brand {
-  _id: string;
-  name: string;
-  slug: string;
-  image: string;
+export interface CartResponse<TProduct = CartProduct> {
+  status: string;
+  message?: string;
+  numOfCartItems: number;
+  cartId: string;
+  data: Cart<TProduct>;
 }

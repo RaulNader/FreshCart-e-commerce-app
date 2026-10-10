@@ -1,16 +1,9 @@
 "use client";
-import { Controller, useForm } from "react-hook-form";
-import {
-  Field,
-  FieldError,
-  FieldGroup,
-  FieldLabel,
-} from "@/components/ui/field";
-import { Input } from "@/components/ui/input";
+import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
+import FormInput from "@/components/forms/FormInput";
 import { zodResolver } from "@hookform/resolvers/zod";
-// import axios from "axios";
-import LoginSchemaType, { loginSchema } from "@/Schema/login.schema";
+import { loginSchema, type LoginValues } from "@/schemas/login.schema";
 import { signIn } from "next-auth/react";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
@@ -19,7 +12,11 @@ import { Loader2 } from "lucide-react";
 export default function Login() {
   const router = useRouter();
 
-  const form = useForm<LoginSchemaType>({
+  const {
+    control,
+    handleSubmit,
+    formState: { isSubmitting },
+  } = useForm<LoginValues>({
     defaultValues: {
       email: "",
       password: "",
@@ -28,7 +25,7 @@ export default function Login() {
     mode: "onTouched",
   });
 
-  async function onLogin(values: LoginSchemaType) {
+  async function onLogin(values: LoginValues) {
     try {
       const res = await signIn("credentials", {
         email: values.email,
@@ -38,88 +35,35 @@ export default function Login() {
       });
 
       if (res?.ok) {
-        toast.success("You have Logged in succesfully", {
-          duration: 3000,
-          position: "top-center",
-          richColors: true,
-        });
+        toast.success("You have Logged in succesfully");
         router.push("/");
         return;
       }
 
-      toast.error(res?.error ?? "Invalid email or password", {
-        duration: 3000,
-        position: "top-center",
-        richColors: true,
-      });
+      toast.error(res?.error ?? "Invalid email or password");
     } catch {
-      toast.error("Something went wrong. Please try again.", {
-        duration: 3000,
-        position: "top-center",
-        richColors: true,
-      });
+      toast.error("Something went wrong. Please try again.");
     }
   }
-
-  const {
-    handleSubmit,
-    formState: { isSubmitting },
-  } = form;
 
   return (
     <div className="w-full max-w-lg mx-auto px-3 sm:px-5 mt-10 sm:mt-16">
       <h1 className="text-2xl text-center font-bold">Sign In</h1>
 
       <form onSubmit={handleSubmit(onLogin)}>
-        {/* Email Form */}
-        <FieldGroup>
-          <Controller
-            name="email"
-            control={form.control}
-            render={({ field, fieldState }) => (
-              <Field data-invalid={fieldState.invalid}>
-                <FieldLabel className="mt-2">Email</FieldLabel>
-                <Input
-                  {...field}
-                  id="form-rhf-demo-email"
-                  aria-invalid={fieldState.invalid}
-                  autoComplete="on"
-                  placeholder="Enter your email"
-                  type="text"
-                  className="bg-white shadow-xl/10"
-                />
-                {fieldState.invalid && fieldState.isTouched && (
-                  <FieldError errors={[fieldState.error]} />
-                )}
-              </Field>
-            )}
-          />
-        </FieldGroup>
-
-        {/* Password Form */}
-        <FieldGroup>
-          <Controller
-            name="password"
-            control={form.control}
-            render={({ field, fieldState }) => (
-              <Field data-invalid={fieldState.invalid}>
-                <FieldLabel className="mt-2">Password</FieldLabel>
-                <Input
-                  {...field}
-                  id="form-rhf-demo-password"
-                  aria-invalid={fieldState.invalid}
-                  autoComplete="on"
-                  placeholder="Enter your password"
-                  type="password"
-                  className="bg-white shadow-xl/10"
-                />
-                {fieldState.invalid && fieldState.isTouched && (
-                  <FieldError errors={[fieldState.error]} />
-                )}
-              </Field>
-            )}
-          />
-        </FieldGroup>
+        <FormInput
+          control={control}
+          name="email"
+          label="Email"
+          placeholder="Enter your email"
+        />
+        <FormInput
+          control={control}
+          name="password"
+          label="Password"
+          type="password"
+          placeholder="Enter your password"
+        />
 
         <Button
           className="bg-gray-600 mt-6 w-full"

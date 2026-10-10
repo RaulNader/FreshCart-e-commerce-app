@@ -1,5 +1,10 @@
 import { getToken } from "next-auth/jwt";
 import { NextRequest, NextResponse } from "next/server";
+import {
+  AUTH_SECRET,
+  SECURE_SESSION_COOKIE,
+  SESSION_COOKIE,
+} from "@/lib/auth-cookie";
 
 const AUTH_PAGES = ["/login", "/register"];
 const PROTECTED_PREFIXES = [
@@ -11,15 +16,13 @@ const PROTECTED_PREFIXES = [
 ];
 
 export async function proxy(request: NextRequest) {
-  const secureCookieName = "__Secure-next-auth.session-token";
-  const regularCookieName = "next-auth.session-token";
-  const cookieName = request.cookies.get(secureCookieName)
-    ? secureCookieName
-    : regularCookieName;
+  const cookieName = request.cookies.get(SECURE_SESSION_COOKIE)
+    ? SECURE_SESSION_COOKIE
+    : SESSION_COOKIE;
 
   const token = await getToken({
     req: request,
-    secret: process.env.AUTH_SECRET ?? process.env.NEXTAUTH_SECRET,
+    secret: AUTH_SECRET,
     cookieName,
   });
   const { pathname } = request.nextUrl;

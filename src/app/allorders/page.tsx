@@ -1,5 +1,6 @@
 import Image from "next/image";
-import { getUserOrders, type UserOrder } from "@/OrdersActions/getUserOrders";
+import { getUserOrders } from "@/services/orders.service";
+import type { UserOrder } from "@/types/order.type";
 
 export const metadata = {
   title: "All Orders",
