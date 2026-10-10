@@ -19,10 +19,8 @@ import { checkPayment, type PaymentMethod } from "@/CheckOutActions/checkOut";
 
 export default function CheckOut() {
   const router = useRouter();
-  const { id }: { id: string } = useParams();
+  const { id } = useParams<{ id: string }>();
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>("credit");
-
-  // console.log(id);
 
   const form = useForm<checkoutSchemaType>({
     defaultValues: {
@@ -35,7 +33,17 @@ export default function CheckOut() {
   });
 
   async function handleCheckOut(values: checkoutSchemaType) {
-    const res = await checkPayment(id, values, paymentMethod);
+    let res;
+    try {
+      res = await checkPayment(id, values, paymentMethod);
+    } catch {
+      toast.error("Something went wrong please try again later", {
+        duration: 4000,
+        position: "top-center",
+        richColors: true,
+      });
+      return;
+    }
 
     if (paymentMethod === "credit") {
       const paymentRoute = res?.session?.url;

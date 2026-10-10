@@ -54,7 +54,7 @@ export default function Register() {
       });
     } catch (error) {
       if (axios.isAxiosError(error) && error.response?.data?.message) {
-        toast.error("Email already exists. Please use a different email.", {
+        toast.error(error.response.data.message, {
           duration: 3000,
           position: "top-center",
           richColors: true,

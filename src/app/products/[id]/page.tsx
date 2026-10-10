@@ -5,6 +5,7 @@ import WishlistBtn from "@/app/_Components/WishlistBtn/WishlistBtn";
 import { getRelatedProducts } from "@/ProductCategoriesAction/relatedProducts";
 import { Product } from "@/types/prodcut.type";
 import Image from "next/image";
+import { notFound } from "next/navigation";
 
 export const metadata = {
   title: "Product Details",
@@ -20,7 +21,7 @@ export default async function ProdcutDetails({
 
   const data = await getProductDetails(id);
 
-  if (!data) return null;
+  if (!data) notFound();
 
   // categories related to products
   const res = await getRelatedProducts(data.category._id);
@@ -33,7 +34,7 @@ export default async function ProdcutDetails({
             <Image
               src={data.imageCover}
               className="w-full h-auto rounded-lg object-cover"
-              alt="product-img"
+              alt={data.title}
               width={500}
               height={500}
               loading="eager"

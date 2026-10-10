@@ -15,7 +15,7 @@ export default function AddBtn({
   className?: string;
 }) {
   const [isLoading, setIsLoading] = useState(false);
-  const { numOfItems, setNumOfItems } = useContext(CartContext);
+  const { setNumOfItems } = useContext(CartContext);
 
   async function addProductToCart(id: string) {
     if (isLoading) return;
@@ -34,7 +34,7 @@ export default function AddBtn({
         if (typeof res.numOfCartItems === "number") {
           setNumOfItems(res.numOfCartItems);
         } else {
-          setNumOfItems(numOfItems + 1);
+          setNumOfItems((count) => count + 1);
         }
         return;
       }

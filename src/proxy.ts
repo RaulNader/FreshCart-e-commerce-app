@@ -1,6 +1,15 @@
 import { getToken } from "next-auth/jwt";
 import { NextRequest, NextResponse } from "next/server";
 
+const AUTH_PAGES = ["/login", "/register"];
+const PROTECTED_PREFIXES = [
+  "/cart",
+  "/wishlist",
+  "/allorders",
+  "/checkout",
+  "/products/",
+];
+
 export async function proxy(request: NextRequest) {
   const secureCookieName = "__Secure-next-auth.session-token";
   const regularCookieName = "next-auth.session-token";
@@ -14,26 +23,30 @@ export async function proxy(request: NextRequest) {
     cookieName,
   });
   const { pathname } = request.nextUrl;
-  const isAuthPage = pathname === "/login" || pathname === "/register";
-  const isCartPage = pathname === "/cart";
-  const isOrdersPage = pathname === "/allorders";
-  const isProductDetailsPage =
-    pathname.startsWith("/products/") && pathname !== "/products";
+  const isAuthPage = AUTH_PAGES.includes(pathname);
+  const isProtectedPage = PROTECTED_PREFIXES.some((prefix) =>
+    pathname.startsWith(prefix),
+  );
 
   if (token && isAuthPage) {
     return NextResponse.redirect(new URL("/", request.url));
   }
 
-  if (!token && (isCartPage || isOrdersPage)) {
+  if (!token && isProtectedPage) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
 
-  if (!token && isProductDetailsPage) {
-    return NextResponse.redirect(new URL("/login", request.url));
-  }
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: ["/cart", "/allorders", "/login", "/register", "/products/:path*"],
+  matcher: [
+    "/cart",
+    "/wishlist",
+    "/allorders",
+    "/checkout/:path*",
+    "/login",
+    "/register",
+    "/products/:path*",
+  ],
 };

@@ -27,7 +27,7 @@ export default async function SingleProducts({
                 <Link href={`/products/${product.id}`}>
                   <Image
                     src={product.imageCover}
-                    alt="product-img"
+                    alt={product.title}
                     width={500}
                     height={500}
                     className="w-full h-auto"

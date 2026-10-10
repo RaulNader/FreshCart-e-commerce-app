@@ -40,10 +40,11 @@ export default function Cart() {
     setIsClearingAll(true);
     setCurrentId(null);
     setCurrentAction(null);
-    const res = await removeAllProducts();
-    const isSuccess = res?.status === "success" || res?.message === "success";
-
     try {
+      const res = await removeAllProducts();
+      const isSuccess =
+        res?.status === "success" || res?.message === "success";
+
       if (isSuccess) {
         toast.success("All Products are cleared", {
           duration: 3000,
@@ -165,15 +166,14 @@ export default function Cart() {
   // Showing cart products
   useEffect(() => {
     async function userCartProducts() {
-      const res = (await getUserCart()) as Cart;
       setIsLoading(true);
       setError("");
-      setCartId(res.cartId);
 
       try {
-        //? api from UserCart
-        // console.log(res);
+        const res = (await getUserCart()) as Cart;
+
         if (res.status === "success") {
+          setCartId(res.cartId);
           const nextProducts = res.data?.products ?? [];
           setProducts(nextProducts);
           setTotalPrice(res.data.totalCartPrice);
@@ -217,11 +217,11 @@ export default function Cart() {
         <div className="relative flex items-center">
           <button
             onClick={() => updateInCart(productId, count - 1)}
-            disabled={disabledBtn}
+            disabled={disabledBtn || count <= 1}
             type="button"
             id={decrementButtonId}
             data-input-counter-decrement={counterInputId}
-            className="hover:bg-emerald-100 flex items-center justify-center text-body bg-neutral-secondary-medium box-border border border-default-medium hover:bg-neutral-tertiary-medium hover:text-heading focus:ring-4 focus:ring-neutral-tertiary rounded-full text-sm focus:outline-none h-6 w-6"
+            className="hover:bg-emerald-100 flex items-center justify-center text-body bg-neutral-secondary-medium box-border border border-default-medium hover:bg-neutral-tertiary-medium hover:text-heading focus:ring-4 focus:ring-neutral-tertiary rounded-full text-sm focus:outline-none h-6 w-6 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <svg
               className="w-3 h-3 text-heading"
@@ -254,7 +254,7 @@ export default function Cart() {
             type="button"
             id={incrementButtonId}
             data-input-counter-increment={counterInputId}
-            className="hover:bg-emerald-100 flex items-center justify-center text-body bg-neutral-secondary-medium box-border border border-default-medium hover:bg-neutral-tertiary-medium hover:text-heading focus:ring-4 focus:ring-neutral-tertiary rounded-full text-sm focus:outline-none h-6 w-6"
+            className="hover:bg-emerald-100 flex items-center justify-center text-body bg-neutral-secondary-medium box-border border border-default-medium hover:bg-neutral-tertiary-medium hover:text-heading focus:ring-4 focus:ring-neutral-tertiary rounded-full text-sm focus:outline-none h-6 w-6 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <svg
               className="w-3 h-3 text-heading"
@@ -372,7 +372,7 @@ export default function Cart() {
                             <Image
                               className="w-16 md:w-20 max-w-full max-h-full"
                               src={product.imageCover}
-                              alt="product-img"
+                              alt={product.title}
                               priority
                               width={200}
                               height={200}
@@ -393,7 +393,7 @@ export default function Cart() {
                             {price} EGP
                           </td>
                           <td className="px-4 lg:px-6 py-4 font-semibold text-[#EFBF04]">
-                            {count > 1 ? `${count * price} EGP` : "-----"}
+                            {count * price} EGP
                           </td>
                           <td className="px-4 lg:px-6 py-4">
                             <button
@@ -460,7 +460,7 @@ export default function Cart() {
                         <Image
                           className="w-16 h-16 object-cover rounded-md"
                           src={product.imageCover}
-                          alt="product-img"
+                          alt={product.title}
                           priority
                           width={200}
                           height={200}
@@ -473,8 +473,7 @@ export default function Cart() {
                             {price} EGP
                           </p>
                           <p className="text-[#EFBF04] font-medium text-sm">
-                            Amount:{" "}
-                            {count > 1 ? `${count * price} EGP` : "-----"}
+                            Amount: {count * price} EGP
                           </p>
                         </div>
                       </div>

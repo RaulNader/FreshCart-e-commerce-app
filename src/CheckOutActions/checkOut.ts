@@ -11,13 +11,15 @@ export async function checkPayment(
   paymentMethod: PaymentMethod,
 ) {
   const token = await getMyToken();
-  const urlAuth = process.env.NEXTAUTH_URL;
+  const returnUrl = encodeURIComponent(
+    process.env.NEXTAUTH_URL ?? "http://localhost:3000",
+  );
 
   if (!token) throw new Error("You must Logged in first");
 
   const endpoint =
     paymentMethod === "credit"
-      ? `https://ecommerce.routemisr.com/api/v1/orders/checkout-session/${cartId}?url=${urlAuth}`
+      ? `https://ecommerce.routemisr.com/api/v1/orders/checkout-session/${cartId}?url=${returnUrl}`
       : `https://ecommerce.routemisr.com/api/v1/orders/${cartId}`;
 
   const res = await fetch(endpoint, {
