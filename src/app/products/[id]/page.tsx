@@ -48,7 +48,7 @@ export default async function ProductDetails({
             <h2 className="text-xl text-emerald-400 my-2">
               {product.category.name}
             </h2>
-            <h3 className="text-blue-500">Avaliable: {product.quantity} </h3>
+            <h3 className="text-blue-500">Available: {product.quantity} </h3>
 
             <div className="w-full flex justify-between my-2">
               <span className="font-bold">Price: {product.price} EGP </span>

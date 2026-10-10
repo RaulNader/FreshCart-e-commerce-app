@@ -3,6 +3,7 @@ import Navbar from "@/components/layout/Navbar";
 import Providers from "@/components/layout/Providers";
 import "./globals.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
+import "swiper/css";
 import { Toaster } from "sonner";
 
 export const metadata: Metadata = {

@@ -41,7 +41,7 @@ export default async function AllOrders() {
     return (
       <div className="w-full max-w-6xl mx-auto px-3 sm:px-5 my-8">
         <p className="bg-white rounded-xl border border-default p-6 text-center text-red-500 text-lg font-semibold">
-          You dont have any orders right now.
+          You don't have any orders right now.
         </p>
       </div>
     );
