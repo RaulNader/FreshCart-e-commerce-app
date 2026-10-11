@@ -79,8 +79,8 @@ export default function CheckOut() {
           <FormInput
             control={control}
             name="details"
-            label="Details"
-            placeholder="Enter your Details"
+            label="Shipping Address"
+            placeholder="Street, building, floor, apartment"
             {...fieldStyles}
           />
           <FormInput
