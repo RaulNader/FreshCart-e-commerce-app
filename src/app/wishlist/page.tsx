@@ -1,13 +1,11 @@
 "use client";
 
 import { addToCart, getCart } from "@/actions/cart.actions";
-import {
-  getWishlist,
-  removeFromWishlist,
-} from "@/actions/wishlist.actions";
+import { getWishlist } from "@/actions/wishlist.actions";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useCart } from "@/context/CartContext";
+import { useWishlist } from "@/context/WishlistContext";
 import { countCartItems } from "@/lib/cart";
 import type { Product } from "@/types/product.type";
 import { Heart, Loader2, ShoppingCart, Trash2 } from "lucide-react";
@@ -46,6 +44,7 @@ function WishlistSkeleton() {
 
 export default function Wishlist() {
   const { setNumOfItems } = useCart();
+  const { remove: removeFromWishlist } = useWishlist();
   const [products, setProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
@@ -70,21 +69,13 @@ export default function Wishlist() {
   async function handleRemove(productId: string) {
     setPending({ productId, type: "remove" });
 
-    try {
-      const res = await removeFromWishlist(productId);
-      if (!res.ok) {
-        toast.error(res.message);
-        return;
-      }
-      toast.success(res.data.message ?? "Product removed from wishlist");
+    // The context shows the toast and un-fills the heart everywhere else.
+    if (await removeFromWishlist(productId)) {
       setProducts((prev) =>
         prev.filter((product) => getProductId(product) !== productId),
       );
-    } catch {
-      toast.error("Product cannot be removed right now");
-    } finally {
-      setPending(null);
     }
+    setPending(null);
   }
 
   async function handleAddToCart(productId: string) {

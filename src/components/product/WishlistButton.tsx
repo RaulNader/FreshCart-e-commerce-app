@@ -1,11 +1,10 @@
 "use client";
 
-import { addToWishlist } from "@/actions/wishlist.actions";
 import { Button } from "@/components/ui/button";
+import { useWishlist } from "@/context/WishlistContext";
 import { cn } from "@/lib/utils";
 import { Heart, Loader2 } from "lucide-react";
 import { useState } from "react";
-import { toast } from "sonner";
 
 export default function WishlistButton({
   id,
@@ -15,25 +14,14 @@ export default function WishlistButton({
   className?: string;
 }) {
   const [isLoading, setIsLoading] = useState(false);
+  const { isSaved, toggle } = useWishlist();
+  const saved = isSaved(id);
 
   async function handleClick() {
     if (isLoading) return;
     setIsLoading(true);
-
-    try {
-      const res = await addToWishlist(id);
-
-      if (!res.ok) {
-        toast.error(res.message);
-        return;
-      }
-
-      toast.success(res.data.message ?? "Product added to wishlist");
-    } catch {
-      toast.error("Failed to add product to wishlist");
-    } finally {
-      setIsLoading(false);
-    }
+    await toggle(id);
+    setIsLoading(false);
   }
 
   return (
@@ -43,6 +31,8 @@ export default function WishlistButton({
       disabled={isLoading}
       type="button"
       aria-busy={isLoading}
+      aria-pressed={saved}
+      title={saved ? "Remove from wishlist" : "Add to wishlist"}
     >
       {isLoading ? (
         <>
@@ -51,8 +41,8 @@ export default function WishlistButton({
         </>
       ) : (
         <>
-          <Heart className="h-4 w-4" />
-          Wishlist
+          <Heart className={cn("h-4 w-4", saved && "fill-current")} />
+          {saved ? "Saved" : "Wishlist"}
         </>
       )}
     </Button>
