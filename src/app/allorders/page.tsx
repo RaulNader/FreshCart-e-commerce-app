@@ -1,4 +1,6 @@
 import Image from "next/image";
+import { PackageOpen } from "lucide-react";
+import { EmptyState } from "@/components/ui/empty-state";
 import { getUserOrders } from "@/services/orders.service";
 import type { UserOrder } from "@/types/order.type";
 
@@ -40,9 +42,13 @@ export default async function AllOrders() {
   if (orders.length === 0) {
     return (
       <div className="w-full max-w-6xl mx-auto px-3 sm:px-5 my-8">
-        <p className="bg-white rounded-xl border border-default p-6 text-center text-red-500 text-lg font-semibold">
-          You don&apos;t have any orders right now.
-        </p>
+        <EmptyState
+          icon={PackageOpen}
+          title="No orders yet"
+          description="When you place an order, it will show up here."
+          action={{ href: "/products", label: "Start shopping" }}
+          className="bg-white rounded-xl border border-default"
+        />
       </div>
     );
   }

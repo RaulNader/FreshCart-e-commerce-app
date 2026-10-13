@@ -1,6 +1,8 @@
 import Pagination from "@/components/product/Pagination";
 import ProductFilters from "@/components/product/ProductFilters";
 import ProductGrid from "@/components/product/ProductGrid";
+import { EmptyState } from "@/components/ui/empty-state";
+import { SearchX } from "lucide-react";
 import { parseProductQuery } from "@/lib/product-query";
 import { getBrands, getCategories } from "@/services/catalog.service";
 import { searchProducts } from "@/services/products.service";
@@ -40,9 +42,12 @@ export default async function Products({
       {result.products.length > 0 ? (
         <ProductGrid products={result.products} />
       ) : (
-        <p className="py-10 text-center text-lg font-semibold text-red-400">
-          No products match your filters.
-        </p>
+        <EmptyState
+          icon={SearchX}
+          title="No products found"
+          description="Try a different search word or remove some filters."
+          action={{ href: "/products", label: "Clear filters" }}
+        />
       )}
 
       <Pagination

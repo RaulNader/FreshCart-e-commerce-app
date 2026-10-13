@@ -9,6 +9,8 @@ import {
 import { CartItemCard, CartItemRow } from "@/components/cart/CartItemView";
 import { CartCardsSkeleton, CartRowsSkeleton } from "@/components/cart/CartSkeleton";
 import CartSummary from "@/components/cart/CartSummary";
+import { EmptyState } from "@/components/ui/empty-state";
+import { ShoppingCart } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 import { countCartItems } from "@/lib/cart";
 import type { CartItem, CartResponse } from "@/types/cart.type";
@@ -183,9 +185,12 @@ export default function Cart() {
           )}
 
           {!isLoading && !error && items.length === 0 && (
-            <p className="px-4 py-6 text-body text-lg sm:text-xl text-red-400 text-center font-bold">
-              Your cart is empty, add some products
-            </p>
+            <EmptyState
+              icon={ShoppingCart}
+              title="Your cart is empty"
+              description="Browse our products and add something you like."
+              action={{ href: "/products", label: "Shop now" }}
+            />
           )}
         </div>
 

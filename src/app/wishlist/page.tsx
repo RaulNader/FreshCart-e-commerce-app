@@ -3,6 +3,7 @@
 import { addToCart, getCart } from "@/actions/cart.actions";
 import { getWishlist } from "@/actions/wishlist.actions";
 import { Button } from "@/components/ui/button";
+import { EmptyState } from "@/components/ui/empty-state";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useCart } from "@/context/CartContext";
 import { useWishlist } from "@/context/WishlistContext";
@@ -123,9 +124,12 @@ export default function Wishlist() {
         )}
 
         {!isLoading && !error && products.length === 0 && (
-          <p className="text-body text-xl text-red-400 text-center font-bold py-6">
-            Your wishlist is empty, add some products
-          </p>
+          <EmptyState
+            icon={Heart}
+            title="Your wishlist is empty"
+            description="Tap the heart on any product to save it for later."
+            action={{ href: "/products", label: "Browse products" }}
+          />
         )}
 
         {!isLoading && !error && products.length > 0 && (

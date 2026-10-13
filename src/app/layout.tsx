@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Footer from "@/components/layout/Footer";
 import Navbar from "@/components/layout/Navbar";
 import Providers from "@/components/layout/Providers";
 import "./globals.css";
@@ -26,10 +27,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>
+      <body className="flex min-h-screen flex-col">
         <Providers>
           <Navbar />
-          {children}
+          {/* flex-1 pushes the footer to the bottom on short pages */}
+          <main className="flex-1">{children}</main>
+          <Footer />
           <Toaster position="top-center" richColors duration={3000} />
         </Providers>
       </body>

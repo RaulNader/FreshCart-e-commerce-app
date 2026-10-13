@@ -2,48 +2,11 @@
 import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
-import {
-  Boxes,
-  Building2,
-  Heart,
-  Home,
-  LogOut,
-  Menu,
-  ReceiptText,
-  ShoppingCart,
-  Tags,
-  X,
-  type LucideIcon,
-} from "lucide-react";
+import { LogOut, Menu, X } from "lucide-react";
 import logo from "@/assets/images/freshcart-logo.svg";
 import { useCart } from "@/context/CartContext";
 import { useState } from "react";
-
-interface NavLink {
-  href: string;
-  label: string;
-  icon: LucideIcon;
-  authOnly?: boolean;
-}
-
-const NAV_LINKS: NavLink[] = [
-  { href: "/", label: "Home", icon: Home },
-  { href: "/cart", label: "Cart", icon: ShoppingCart, authOnly: true },
-  { href: "/wishlist", label: "Wishlist", icon: Heart, authOnly: true },
-  { href: "/allorders", label: "All Orders", icon: ReceiptText, authOnly: true },
-  { href: "/products", label: "Products", icon: Boxes },
-  { href: "/categories", label: "Categories", icon: Tags },
-  { href: "/brands", label: "Brands", icon: Building2 },
-];
-
-const SOCIAL_LINKS = [
-  { href: "https://www.instagram.com", icon: "fa-instagram text-pink-500" },
-  { href: "https://www.facebook.com", icon: "fa-facebook text-blue-800" },
-  { href: "https://www.tiktok.com", icon: "fa-tiktok text-gray-800" },
-  { href: "https://www.twitter.com", icon: "fa-twitter text-blue-400" },
-  { href: "https://www.linkedin.com", icon: "fa-linkedin text-blue-500" },
-  { href: "https://www.youtube.com", icon: "fa-youtube text-red-600" },
-];
+import { NAV_LINKS, SOCIAL_LINKS } from "./links";
 
 function CartBadge({ count, className }: { count: number; className: string }) {
   if (count <= 0) return null;
