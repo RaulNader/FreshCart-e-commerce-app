@@ -1,6 +1,6 @@
 import { productsHref } from "@/lib/product-query";
 import { absoluteUrl } from "@/lib/site";
-import { getBrands, getCategories } from "@/services/catalog.service";
+import { getActiveBrands, getActiveCategories } from "@/services/catalog.service";
 import { getAllProducts } from "@/services/products.service";
 import type { MetadataRoute } from "next";
 
@@ -10,8 +10,8 @@ import type { MetadataRoute } from "next";
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const [products, categories, brands] = await Promise.all([
     getAllProducts(),
-    getCategories(),
-    getBrands(),
+    getActiveCategories(),
+    getActiveBrands(),
   ]);
 
   const staticPages: MetadataRoute.Sitemap = [
