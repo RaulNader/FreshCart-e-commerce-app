@@ -14,7 +14,7 @@ function LinkColumn({
   links: typeof NAV_LINKS;
 }) {
   return (
-    <div>
+    <nav aria-label={title}>
       <h2 className="mb-3 font-semibold text-white">{title}</h2>
       <ul className="space-y-2 text-sm">
         {links.map(({ href, label }) => (
@@ -25,7 +25,7 @@ function LinkColumn({
           </li>
         ))}
       </ul>
-    </div>
+    </nav>
   );
 }
 

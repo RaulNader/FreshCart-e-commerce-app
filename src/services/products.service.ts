@@ -51,6 +51,11 @@ async function fetchAllProducts(params: URLSearchParams) {
   return [firstPage, ...remainingPages].flatMap((page) => page.data);
 }
 
+/** Every product in the catalog (used by the sitemap). */
+export function getAllProducts() {
+  return fetchAllProducts(new URLSearchParams());
+}
+
 export async function searchProducts(
   query: ProductQuery,
 ): Promise<ProductSearchResult> {

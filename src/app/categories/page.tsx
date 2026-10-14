@@ -1,9 +1,13 @@
-import Image from "next/image";
+import CatalogGrid from "@/components/catalog/CatalogGrid";
+import { productsHref } from "@/lib/product-query";
 import { getCategories } from "@/services/catalog.service";
+import type { Metadata } from "next";
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "Categories",
-  description: "FreshCart - Categories",
+  description:
+    "Browse FreshCart categories: electronics, mobiles, men's and women's fashion, beauty, home, supermarket and more.",
+  alternates: { canonical: "/categories" },
 };
 
 export default async function Categories() {
@@ -12,26 +16,14 @@ export default async function Categories() {
   return (
     <div className="w-full max-w-6xl mx-auto px-3 sm:px-5 my-8">
       <h1 className="text-3xl font-bold mb-6">All Categories</h1>
-
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        {categories.map((category) => (
-          <div
-            key={category._id}
-            className="bg-white rounded-xl border border-default shadow-xs p-4 flex flex-col items-center gap-3"
-          >
-            <Image
-              src={category.image}
-              alt={category.name}
-              width={140}
-              height={140}
-              className="w-24 h-24 object-contain"
-            />
-            <h2 className="text-base font-semibold text-center">
-              {category.name}
-            </h2>
-          </div>
-        ))}
-      </div>
+      <CatalogGrid
+        items={categories.map((category) => ({
+          id: category._id,
+          name: category.name,
+          image: category.image,
+          href: productsHref({ category: category._id }),
+        }))}
+      />
     </div>
   );
 }

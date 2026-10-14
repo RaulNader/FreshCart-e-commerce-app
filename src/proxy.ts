@@ -7,13 +7,9 @@ import {
 } from "@/lib/auth-cookie";
 
 const AUTH_PAGES = ["/login", "/register"];
-const PROTECTED_PREFIXES = [
-  "/cart",
-  "/wishlist",
-  "/allorders",
-  "/checkout",
-  "/products/",
-];
+// Product pages stay public so shoppers and search engines can browse them;
+// only the actions on them (cart, wishlist) need a login.
+const PROTECTED_PREFIXES = ["/cart", "/wishlist", "/allorders", "/checkout"];
 
 export async function proxy(request: NextRequest) {
   const cookieName = request.cookies.get(SECURE_SESSION_COOKIE)
@@ -50,6 +46,5 @@ export const config = {
     "/checkout/:path*",
     "/login",
     "/register",
-    "/products/:path*",
   ],
 };

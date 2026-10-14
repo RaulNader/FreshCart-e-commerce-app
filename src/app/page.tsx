@@ -2,13 +2,33 @@ import CategoriesSlider from "@/components/home/CategoriesSlider";
 import MainSlider from "@/components/home/MainSlider";
 import ProductGrid from "@/components/product/ProductGrid";
 import ProductGridSkeleton from "@/components/product/ProductGridSkeleton";
+import JsonLd from "@/components/seo/JsonLd";
 import { Skeleton } from "@/components/ui/skeleton";
+import { SITE_NAME, SITE_URL, absoluteUrl } from "@/lib/site";
 import { getProducts } from "@/services/products.service";
+import type { Metadata } from "next";
 import { Suspense } from "react";
 
-export const metadata = {
-  title: "Home",
-  description: "FreshCart - Home",
+// No title here: the home page uses the layout's default title.
+export const metadata: Metadata = {
+  alternates: { canonical: "/" },
+};
+
+// Tells Google the site name and that /products?keyword=... is its search,
+// which can show a search box under the site in results.
+const websiteJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: SITE_NAME,
+  url: SITE_URL,
+  potentialAction: {
+    "@type": "SearchAction",
+    target: {
+      "@type": "EntryPoint",
+      urlTemplate: absoluteUrl("/products?keyword={search_term_string}"),
+    },
+    "query-input": "required name=search_term_string",
+  },
 };
 
 async function HomeProducts() {
@@ -34,15 +54,29 @@ function CategoriesSliderSkeleton() {
 export default function Home() {
   return (
     <>
+      <JsonLd data={websiteJsonLd} />
+      {/* Every page needs one h1; the design has no visible headline here. */}
+      <h1 className="sr-only">
+        {SITE_NAME}: shop groceries, electronics and fashion online in Egypt
+      </h1>
       <MainSlider />
       <Suspense fallback={<CategoriesSliderSkeleton />}>
         <CategoriesSlider />
       </Suspense>
-      <div className="container mx-auto w-full max-w-6xl px-3 sm:px-5 mt-6">
+      <section
+        aria-labelledby="featured-products"
+        className="container mx-auto w-full max-w-6xl px-3 sm:px-5 mt-6"
+      >
+        <h2
+          id="featured-products"
+          className="text-2xl text-stone-600 font-bold pb-2 px-2"
+        >
+          Featured Products
+        </h2>
         <Suspense fallback={<ProductGridSkeleton />}>
           <HomeProducts />
         </Suspense>
-      </div>
+      </section>
     </>
   );
 }

@@ -40,7 +40,7 @@ export default function Navbar() {
   );
 
   return (
-    <nav className="sticky inset-s-0 top-0 inset-e-0 z-50 bg-gray-700 text-white font-medium shadow-sm">
+    <header className="sticky inset-s-0 top-0 inset-e-0 z-50 bg-gray-700 text-white font-medium shadow-sm">
       <div className="container w-full max-w-6xl mx-auto px-3 sm:px-5 py-3">
         <div className="flex items-center justify-between lg:hidden">
           <Link href="/" onClick={closeMobileMenu}>
@@ -51,13 +51,17 @@ export default function Navbar() {
             onClick={() => setIsMobileMenuOpen((prev) => !prev)}
             className="inline-flex items-center justify-center h-9 w-9 rounded-md border border-white/30"
             aria-expanded={isMobileMenuOpen}
+            aria-controls="mobile-menu"
             aria-label="Toggle navigation menu"
           >
             {isMobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
         </div>
 
-        <div className="hidden lg:flex lg:items-center lg:justify-between lg:gap-3">
+        <nav
+          aria-label="Main"
+          className="hidden lg:flex lg:items-center lg:justify-between lg:gap-3"
+        >
           <ul className="flex gap-x-3 xl:gap-x-4 2xl:gap-x-6 items-center text-sm">
             <li>
               <Link href="/">{logoImage}</Link>
@@ -113,9 +117,11 @@ export default function Navbar() {
               </>
             )}
           </ul>
-        </div>
+        </nav>
 
-        <div
+        <nav
+          id="mobile-menu"
+          aria-label="Main"
           className={`${isMobileMenuOpen ? "block" : "hidden"} lg:hidden mt-3 border-t border-white/20 pt-3 space-y-3`}
         >
           <ul className="flex flex-col gap-2 text-sm">
@@ -174,8 +180,8 @@ export default function Navbar() {
               </>
             )}
           </ul>
-        </div>
+        </nav>
       </div>
-    </nav>
+    </header>
   );
 }

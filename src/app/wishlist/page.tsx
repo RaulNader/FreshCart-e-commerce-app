@@ -133,13 +133,13 @@ export default function Wishlist() {
         )}
 
         {!isLoading && !error && products.length > 0 && (
-          <div className="space-y-3">
+          <ul className="space-y-3">
             {products.map((product) => {
               const productId = getProductId(product);
               const isCurrent = pending?.productId === productId;
 
               return (
-                <div
+                <li
                   key={productId}
                   className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 p-3 border border-default rounded-lg"
                 >
@@ -155,11 +155,14 @@ export default function Wishlist() {
                     </Link>
 
                     <div>
-                      <Link href={`/products/${productId}`}>
-                        <p className="font-semibold text-heading hover:underline line-clamp-1">
+                      <h2 className="font-semibold text-heading line-clamp-1">
+                        <Link
+                          href={`/products/${productId}`}
+                          className="hover:underline"
+                        >
                           {product.title}
-                        </p>
-                      </Link>
+                        </Link>
+                      </h2>
                       <p className="text-blue-500 font-medium">
                         {product.price} EGP
                       </p>
@@ -199,10 +202,10 @@ export default function Wishlist() {
                       )}
                     </Button>
                   </div>
-                </div>
+                </li>
               );
             })}
-          </div>
+          </ul>
         )}
       </div>
     </div>

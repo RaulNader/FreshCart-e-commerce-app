@@ -1,9 +1,13 @@
-import Image from "next/image";
+import CatalogGrid from "@/components/catalog/CatalogGrid";
+import { productsHref } from "@/lib/product-query";
 import { getBrands } from "@/services/catalog.service";
+import type { Metadata } from "next";
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "Brands",
-  description: "FreshCart - Brands",
+  description:
+    "Shop products from top brands like Adidas, Samsung, Sony, Dell and more at FreshCart.",
+  alternates: { canonical: "/brands" },
 };
 
 export default async function Brands() {
@@ -12,24 +16,14 @@ export default async function Brands() {
   return (
     <div className="w-full max-w-6xl mx-auto px-3 sm:px-5 my-8">
       <h1 className="text-3xl font-bold mb-6">All Brands</h1>
-
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        {brands.map((brand) => (
-          <div
-            key={brand._id}
-            className="bg-white rounded-xl border border-default shadow-xs p-4 flex flex-col items-center gap-3"
-          >
-            <Image
-              src={brand.image}
-              alt={brand.name}
-              width={120}
-              height={120}
-              className="w-24 h-24 object-contain"
-            />
-            <h2 className="text-base font-semibold text-center">{brand.name}</h2>
-          </div>
-        ))}
-      </div>
+      <CatalogGrid
+        items={brands.map((brand) => ({
+          id: brand._id,
+          name: brand.name,
+          image: brand.image,
+          href: productsHref({ brand: brand._id }),
+        }))}
+      />
     </div>
   );
 }

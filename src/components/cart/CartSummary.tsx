@@ -18,8 +18,13 @@ export default function CartSummary({
   onClear,
 }: CartSummaryProps) {
   return (
-    <div className="bg-white rounded-xl border border-default shadow-xs p-4 flex flex-col gap-4 lg:sticky lg:top-24">
-      <h1 className="text-2xl font-bold text-heading">Summary</h1>
+    <aside
+      aria-labelledby="cart-summary"
+      className="bg-white rounded-xl border border-default shadow-xs p-4 flex flex-col gap-4 lg:sticky lg:top-24"
+    >
+      <h2 id="cart-summary" className="text-2xl font-bold text-heading">
+        Summary
+      </h2>
       <div className="rounded-lg border border-default p-4">
         <p className="text-sm text-muted-foreground">Total Price</p>
         <p className="mt-1 text-2xl font-bold text-heading">{totalPrice} EGP</p>
@@ -48,6 +53,6 @@ export default function CartSummary({
           )}
         </Button>
       </div>
-    </div>
+    </aside>
   );
 }
