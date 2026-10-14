@@ -8,7 +8,7 @@ import {
   productsHref,
   type ProductQuery,
 } from "@/lib/product-query";
-import { getBrands, getCategories } from "@/services/catalog.service";
+import { getActiveBrands, getActiveCategories } from "@/services/catalog.service";
 import { searchProducts } from "@/services/products.service";
 import type { Metadata } from "next";
 
@@ -20,7 +20,7 @@ type PageProps = {
 async function listingTitle(query: ProductQuery) {
   if (query.keyword) return `Search results for "${query.keyword}"`;
 
-  const [categories, brands] = await Promise.all([getCategories(), getBrands()]);
+  const [categories, brands] = await Promise.all([getActiveCategories(), getActiveBrands()]);
   const category = categories.find((c) => c._id === query.category)?.name;
   const brand = brands.find((b) => b._id === query.brand)?.name;
   const subject = [brand, category].filter(Boolean).join(" ");
@@ -59,8 +59,8 @@ export default async function Products({ searchParams }: PageProps) {
 
   const [result, categories, brands, title] = await Promise.all([
     searchProducts(query),
-    getCategories(),
-    getBrands(),
+    getActiveCategories(),
+    getActiveBrands(),
     listingTitle(query),
   ]);
 
